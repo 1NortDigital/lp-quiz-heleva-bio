@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Diagnóstico gratuito do funil de vendas da sua loja de móveis."/>
+<title>Diagnóstico Heleva Moveleiros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Playfair+Display:wght@700;900&family=Sora:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="preload" as="image" href="hero-welcome.webp" type="image/webp"/>
+
+<!-- ===================== META PIXEL (base) ===================== -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
+<style>
+:root{
+  --yellow:#F8C000; --yellow-d:#DFA800;
+  --bg:#0A0805; --line:rgba(255,255,255,.10);
+  --txt:#fff; --txt-dim:rgba(255,255,255,.6); --txt-faint:rgba(255,255,255,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden}
+.w-title,.q-title,.success-t,.analy-t,.modal h3{font-family:'Sora','Plus Jakarta Sans',sans-serif}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,.08);z-index:50}
+.topbar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--yellow-d),var(--yellow));transition:width .45s cubic-bezier(.4,0,.2,1)}
+.brand{position:fixed;top:16px;left:0;right:0;text-align:center;z-index:40;pointer-events:none}
+.logo{height:52px;width:auto;display:inline-block}
+
+.stage{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:52px 22px 18px;position:relative}
+.stage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 50% at 50% 30%,rgba(253,216,53,.07),transparent 70%);pointer-events:none}
+.wrap{width:100%;max-width:600px;position:relative}
+
+.screen{display:none;animation:in .34s ease}
+.screen.active{display:block}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.w-hero{width:100%;height:clamp(200px,30vh,280px);object-fit:cover;object-position:center 22%;border-radius:16px;display:block;margin-bottom:12px;border:1px solid var(--line)}
+.q-hero{width:100%;height:clamp(200px,30vh,280px);object-fit:cover;object-position:center 18%;border-radius:14px;display:block;margin-bottom:12px;border:1px solid var(--line)}
+.greet{font-size:14px;font-weight:700;color:var(--yellow);margin-bottom:6px;letter-spacing:.01em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);margin-bottom:20px}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--yellow);border-radius:2px}
+.w-title{font-size:clamp(27px,5.5vw,42px);font-weight:800;line-height:1.22;letter-spacing:-.02em;margin-bottom:20px}
+.w-title em{color:var(--yellow);font-style:normal}
+.w-sub{font-size:clamp(16px,2.2vw,18.5px);color:var(--txt-dim);line-height:1.75;margin-bottom:22px}
+.w-sub b{color:#fff;font-weight:700}
+.w-note{font-size:14px;color:var(--txt-faint);line-height:1.65;margin-bottom:0}
+
+.proof{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--txt-dim);font-weight:700;flex-wrap:wrap}
+.proof .stars{color:var(--yellow);letter-spacing:1px}
+.proof b{color:#fff}
+
+.q-step{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
+.q-title{font-size:clamp(20px,4vw,28px);font-weight:800;line-height:1.2;letter-spacing:-.01em;margin-bottom:6px}
+.q-sub{font-size:17px;color:var(--txt-dim);margin-bottom:18px;line-height:1.5;font-weight:600}
+
+.field{margin-bottom:14px}
+.label{display:block;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--txt-faint);margin-bottom:7px}
+.input{width:100%;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.14);border-radius:14px;padding:16px 18px;font-size:17px;color:#fff;outline:none;transition:border-color .18s,background .18s;font-family:inherit}
+.input::placeholder{color:rgba(255,255,255,.28)}
+.input:focus{border-color:var(--yellow);background:rgba(253,216,53,.05)}
+.input.err{border-color:#ef4444}
+.input-wrap{position:relative;display:flex;align-items:center}
+.prefix{position:absolute;left:18px;font-size:17px;font-weight:700;color:rgba(255,255,255,.5);pointer-events:none}
+.input.has-prefix{padding-left:60px}
+/* mantém o tema escuro quando o navegador preenche automático (autofill) */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active{
+  -webkit-text-fill-color:#fff !important;
+  -webkit-box-shadow:0 0 0 1000px #161311 inset !important;
+  caret-color:#fff;
+  transition:background-color 9999s ease-in-out 0s;
+}
+.err-msg{display:none;color:#ff6b6b;font-size:12.5px;font-weight:700;margin-top:6px}
+.field.show-err .err-msg{display:block;animation:in .2s ease}
+
+.contacts-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-bottom:14px;padding:13px;border-radius:12px;border:1px dashed rgba(255,255,255,.22);background:rgba(255,255,255,.03);color:var(--txt-dim);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:all .16s}
+.contacts-btn:hover{border-color:var(--yellow);color:#fff;background:rgba(253,216,53,.06)}
+.trust{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--txt-faint);margin-top:2px}
+.trust svg{flex-shrink:0}
+
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 18px;font-size:15.5px;font-weight:700;color:#fff;cursor:pointer;transition:all .16s;font-family:inherit}
+.opt:hover{border-color:rgba(253,216,53,.6);background:rgba(253,216,53,.07)}
+.opt.sel{border-color:var(--yellow);background:rgba(253,216,53,.14)}
+.opt-ic{font-size:22px;flex-shrink:0;width:26px;text-align:center}
+.opt-dot{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.28);flex-shrink:0;transition:all .16s;margin-left:auto}
+.opt.sel .opt-dot{border-color:var(--yellow);background:var(--yellow);box-shadow:inset 0 0 0 5px var(--bg)}
+
+.btn{width:100%;padding:15px;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;border:none;font-family:inherit;margin-top:10px;transition:filter .18s,transform .18s;background:linear-gradient(135deg,var(--yellow-d),var(--yellow));color:#0a0805}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.back{background:none;border:none;font-size:13px;color:var(--txt-faint);cursor:pointer;padding:16px 0 0;font-family:inherit;display:block;width:100%;text-align:center}
+.back:hover{color:#fff}
+
+/* analisando seu perfil */
+.spinner{width:64px;height:64px;border:4px solid rgba(253,216,53,.18);border-top-color:var(--yellow);border-radius:50%;margin:0 auto 26px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.analy-t{font-size:clamp(22px,5vw,28px);font-weight:800;text-align:center;margin-bottom:10px}
+.analy-s{color:var(--txt-dim);text-align:center;font-size:15px;min-height:22px;transition:opacity .25s}
+
+.success-ic{width:74px;height:74px;border-radius:50%;background:rgba(253,216,53,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:38px;color:var(--yellow)}
+.success-t{font-size:clamp(24px,5vw,32px);font-weight:800;margin-bottom:12px;text-align:center}
+.success-s{font-size:16px;color:var(--txt-dim);line-height:1.65;text-align:center;max-width:420px;margin:0 auto 22px}
+.wpp-btn{display:flex;align-items:center;justify-content:center;gap:10px;max-width:360px;margin:0 auto;padding:16px;border-radius:14px;background:#25D366;color:#072b14;font-weight:800;font-size:16px;text-decoration:none;transition:filter .18s,transform .18s}
+.wpp-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.wpp-alt{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:10px;padding:14px;border-radius:14px;border:2px solid #25D366;background:transparent;color:#25D366;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit;transition:background .18s}
+.wpp-alt:hover{background:rgba(37,211,102,.12)}
+
+/* modal de retenção */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:22px}
+.modal-bg.show{display:flex}
+.modal{background:#15110a;border:1px solid var(--line);border-radius:20px;padding:32px 26px;max-width:420px;width:100%;text-align:center;animation:in .3s ease}
+.modal .mic{font-size:40px;margin-bottom:14px}
+.modal h3{font-size:22px;font-weight:800;margin-bottom:10px}
+.modal p{color:var(--txt-dim);font-size:15px;line-height:1.6;margin-bottom:22px}
+.modal .btn{margin-top:0}
+
+/* prova social — sessões grandes, sem card, tipografia serif */
+.sp-screen .q-title{font-family:'Playfair Display','Sora',serif;font-weight:700;letter-spacing:-.015em}
+.sp-items{display:flex;flex-direction:column;gap:0;margin:14px -22px 0}
+.sp-item{display:grid;grid-template-columns:1fr;gap:24px;padding:32px 22px;min-height:58vh;align-items:center;position:relative}
+.sp-item + .sp-item::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:55%;height:1px;background:linear-gradient(90deg,transparent,rgba(253,216,53,.22),transparent)}
+.sp-media{position:relative;aspect-ratio:9/14;border-radius:20px;overflow:hidden;background:rgba(0,0,0,.4);cursor:pointer;max-width:360px;margin:0 auto;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06)}
+.sp-video,.sp-img{width:100%;height:100%;object-fit:cover;display:block}
+.sp-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;background:rgba(0,0,0,.6);border:0;color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,background .15s}
+.sp-play:hover{transform:translate(-50%,-50%) scale(1.08);background:rgba(253,216,53,.85);color:#0a0805}
+.sp-play.hidden{display:none}
+.sp-text{padding:8px 0}
+.sp-item-title{font-family:'Playfair Display','Sora',serif;color:#C9A22E;font-weight:700;font-size:clamp(28px,5.5vw,40px);line-height:1.15;letter-spacing:-.015em;margin-bottom:16px}
+.sp-item-desc{color:var(--txt-dim);font-size:clamp(16.5px,2.1vw,20px);line-height:1.55}
+@media(min-width:820px){
+  .stage:has(.sp-screen) .wrap{max-width:1040px}
+  .sp-item{grid-template-columns:360px 1fr;gap:56px;padding:48px 22px;min-height:62vh}
+  .sp-item--reverse{grid-template-columns:1fr 360px}
+  .sp-item--reverse .sp-media{order:2}
+  .sp-item--reverse .sp-text{order:1}
+}
+
+@media(max-width:560px){
+  .brand{top:10px} .logo{height:38px} .stage{padding:60px 16px 18px}
+  .w-hero{height:clamp(170px,24vh,210px);margin-bottom:10px}
+  .q-hero{height:clamp(180px,24vh,220px);margin-bottom:10px;object-position:center 15%}
+  .w-title{font-size:clamp(25px,6.5vw,32px);margin-bottom:14px;line-height:1.2}
+  .w-sub{font-size:16px;line-height:1.7;margin-bottom:16px}
+  .greet{font-size:14px;margin-bottom:6px}
+  .btn{margin-top:8px;padding:14px}
+  .proof{margin-top:10px;padding-top:8px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="topbar-fill" id="progFill"></div></div>
+<div class="brand"><img class="logo" src="logo-heleva.webp" alt="Heleva Moveleiros"/></div>
+
+<main class="stage"><div class="wrap" id="stepHost"></div></main>
+
+<!-- modal de retenção (#4) -->
+<div class="modal-bg" id="retModal">
+  <div class="modal">
+    <div class="mic">👀</div>
+    <h3 id="retTitle"></h3>
+    <p id="retText"></p>
+    <button class="btn" id="retStay"></button>
+    <button class="back" id="retLeave"></button>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   CONFIG — tudo que muda por cliente fica aqui
+   ========================================================================= */
+const CONFIG = {
+  pixelId:    "946129428470465",
+  webhookUrl: "https://webhooks.matheusscherrer.com.br/webhook/novo-site",
+  sheetsUrl:  "https://script.google.com/macros/s/AKfycbzYM6CdDzk5CFiOrmSJMBw_ds_boUJE_SI2F6n2B2bmiAI72hPspsGsrLjN3PTupMZXpw/exec",   // MESMA URL das outras LPs (roteia por 'pagina' p/ aba Moveis)
+  pagina:     "lp-quiz-heleva-bio-instagram",
+  origemLabel:"bio do Instagram",
+
+  // EVENTOS — só disparam pro lead qualificado (score >= qualifyThreshold e sem kill switch)
+  eventoConversao: "RespondiConversion",   // loja qualificada
+  eventoContato:   "EndForm",
+  pedirEmail:      false,
+
+  // VALOR no evento (otimização por valor)
+  valorBom: 25,
+  valorTop: 100,
+  currency: "BRL",
+
+  // QUALIFICAÇÃO: COM kill switch — "Nenhum vendedor" e "Menos de R$ 30 mil/mês" derrubam o lead.
+  // Lead derrubado ainda cai no Sheets (marcado 'desqualificado'), mas NÃO dispara evento de conversão
+  // e NÃO vai pro WhatsApp — assim a campanha não otimiza por loja fora do ICP.
+  qualifyThreshold: 1,    // precisa somar pelo menos 1 ponto no caminho
+  topThreshold:    7,     // lead TOP = estrutura de vendas + faturamento + disposição a investir
+
+  // WHATSAPP — lead qualificado cai direto na conversa com mensagem pronta.
+  whatsapp: {
+    number: "5521983346987",
+    msg: "Olá! Aqui é o {nome}, cheguei pela bio do Instagram da HELEVA, tenho loja de móveis e acabei de fazer o diagnóstico. Quero encher minha agenda de orçamentos.",
+    autoRedirect: true,
+    redirectDelayMs: 1100
+  },
+
+  // TELA "ANALISANDO"
+  analisando: {
+    enabled: true,
+    ms: 1600,
+    msgs: ["Analisando sua loja…","Cruzando com lojas de móveis do Brasil…","Quase pronto…"]
+  },
+
+  // MODAL DE RETENÇÃO NO BACK
+  retencao: {
+    enabled: true,
+    title: "Espera! Falta só um passo 👀",
+    text: "Você está a segundos de receber seu diagnóstico gratuito. Quer continuar de onde parou?",
+    stay: "Continuar diagnóstico",
+    leave: "Sair mesmo assim"
+  },
+  backRedirect: { url:"" },
+
+  welcome: {
+    eyebrow:"Método Heleva",
+    image:"hero-welcome.jpg",
+    imageWebp:"hero-welcome.webp",
+    title:"Conheça o Método capaz de levar <em>Clientes Prontos pra Comprar TODOS OS DIAS</em> pro WhatsApp da sua loja!",
+    sub:"Ajudamos <b>lojas de móveis, planejados e marcenarias</b> a encherem a agenda de orçamentos com <b>Geração de Demanda, IA de Atendimento e Processo Comercial Alinhado</b>.",
+    note:"",
+    proof:"<b>Lojas de móveis e planejados</b> já escalando com a Heleva",   // TODO Bruno: colocar o número real de lojas atendidas
+    cta:"Começar →"
+  },
+
+  // PROVA SOCIAL — tela antes do submit final. Desligada: faltam cases moveleiros aprovados.
+  // Pra ligar: enabled:true + preencher items (video ou image + title + desc) com casos REAIS.
+  socialProof: {
+    enabled: false,
+    eyebrow: "Antes de enviar seu diagnóstico",
+    title: "{nome}, olha o resultado real de quem já vende com a Heleva",
+    sub: "Antes de finalizar, conhece quem já tá colhendo resultado com a Heleva.",
+    cta: "Enviar diagnóstico →",
+    items: []
+  },
+
+  steps: [
+    /* Tela 1 — contato essencial (versão bio Instagram: fluxo curto pra lead orgânico) */
+    { id:"contato", type:"contact", fireContato:true, savePartial:true, contactPicker:true, title:"Vamos começar 👋", sub:"Pra onde enviamos seu diagnóstico?",
+      fields:[
+        { key:"nome",     label:"Seu nome", type:"text", placeholder:"João Silva",           autocomplete:"name" },
+        { key:"telefone", label:"WhatsApp", type:"tel",  placeholder:"(11) 99999-9999",      autocomplete:"tel", prefix:"+55"  }
+      ], trust:true, next:"desafio" },
+
+    /* Única pergunta de afinidade */
+    { id:"desafio", type:"single", image:"imagens/desafio.jpg", title:"Qual o maior desafio da loja hoje, {nome}?",
+      options:[
+        {ic:"🚪",t:"Falta movimento / clientes novos",        s:0, next:"faturamento"},
+        {ic:"🎯",t:"Faço orçamento, mas o cliente some",      s:0, next:"faturamento"},
+        {ic:"🤝",t:"Dependo só de indicação",                 s:0, next:"faturamento"},
+        {ic:"📈",t:"Já vendo bem, quero escalar",             s:0, next:"faturamento"}
+      ] },
+
+    /* Última pergunta (submit) — faturamento como qualificatória com kill. Mantém o filtro anti-lead-lixo. */
+    { id:"faturamento", type:"single", submit:true, image:"imagens/contratos.jpg", title:"Qual o faturamento mensal da sua Loja?",
+      options:[
+        {ic:"📉",t:"Menos de R$ 30.000 mês",           s:0, kill:true},
+        {ic:"📊",t:"De R$ 31 mil a R$ 50 mil mês",     s:1},
+        {ic:"📈",t:"De R$ 51 mil a R$ 80 mil mês",     s:2},
+        {ic:"🚀",t:"Acima de R$ 80 mil",               s:3}
+      ] }
+  ]
+};
+
+/* =========================================================================
+   ENGINE
+   ========================================================================= */
+(function(){
+  const host = document.getElementById("stepHost");
+  const fill = document.getElementById("progFill");
+  const stepById = {}; CONFIG.steps.forEach(s=>stepById[s.id]=s);
+  const lead = { qualified:null, score:0, top:false, killed:false, respostas:{}, pts:{}, kills:{}, papel:"", firedEvents:[] };
+  const stepHistory = [];   // histórico de telas (NÃO confundir com window.history)
+  let currentId = null;
+  let partialSent = false;
+  let retentionArmed = false;
+
+  if(window.fbq && CONFIG.pixelId.indexOf("COLOQUE")<0){ fbq('init',CONFIG.pixelId); fbq('track','PageView'); }
+
+  const params = new URLSearchParams(location.search);
+  /* UTM default pra tráfego orgânico da bio do Instagram — sobrescrito se a URL trouxer params */
+  const utms = {
+    utm_source:   params.get('utm_source')   || 'instagram',
+    utm_medium:   params.get('utm_medium')   || 'bio',
+    utm_campaign: params.get('utm_campaign') || 'organic-bio',
+    utm_content:  params.get('utm_content')  || ''
+  };
+  const eventId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random());
+  /* ---- Ref: código curto de rastreio (planilha <-> WhatsApp <-> CRM) ----
+     Gerado no LOAD e guardado em sessionStorage: recarregar no meio do quiz NÃO troca o código;
+     abrir noutra aba/dia gera outro. Alfabeto sem 0/O/1/I — o código é lido por humano no WhatsApp.
+     Tudo defensivo: se falhar, refCode fica vazio e o fluxo (planilha + redirect) segue igual. */
+  const REF_ALFABETO = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';   // 32 chars → 256 % 32 == 0, sem viés no módulo
+  const REF_RE = /^R[2-9A-HJ-NP-Z]{5}$/;
+  function novoRef(){
+    let bytes = null;
+    try{ if(window.crypto && crypto.getRandomValues) bytes = crypto.getRandomValues(new Uint8Array(5)); }catch(e){}
+    let out = 'R';
+    for(let i=0;i<5;i++){
+      const n = bytes ? bytes[i] : Math.floor(Math.random()*256);
+      out += REF_ALFABETO[n % REF_ALFABETO.length];
+    }
+    return out;
+  }
+  const refCode = (function(){
+    try{
+      const guardado = sessionStorage.getItem('n1_ref');
+      if(guardado && REF_RE.test(guardado)) return guardado;
+      const novo = novoRef();
+      try{ sessionStorage.setItem('n1_ref', novo); }catch(e){}   // aba anônima/storage bloqueado: segue só em memória
+      return novo;
+    }catch(e){
+      try{ return novoRef(); }catch(e2){ return ''; }
+    }
+  })();
+
+  /* ---- fbc / fbp (#9) — melhora dedupe e precisão da CAPI ---- */
+  function getCookie(n){ const m=document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m?decodeURIComponent(m.pop()):''; }
+  let fbc = getCookie('_fbc');
+  const fbclid = params.get('fbclid');
+  if(!fbc && fbclid){ fbc = 'fb.1.'+Date.now()+'.'+fbclid; }
+  const fbp = getCookie('_fbp');
+
+  /* ---- util: substitui {nome} e {desafio} (#10 personalização) ---- */
+  function firstName(){ const n=(lead.nome||'').trim(); if(!n || n.indexOf('@')>-1) return ''; return n.split(/\s+/)[0]||''; }
+  function px(str){
+    if(!str) return str||'';
+    const fn = firstName();
+    // {nome}: se não tiver nome ainda, remove o token e vírgula órfã
+    let out = fn ? str.replace(/\{nome\}/g, fn) : str.replace(/,?\s*\{nome\}/g,'').replace(/\{nome\}/g,'');
+    // {desafio}: usa a resposta (minúscula) ou remove o token
+    const des = (lead.respostas.desafio||'').toLowerCase();
+    out = des ? out.replace(/\{desafio\}/g, des) : out.replace(/\{desafio\}/g,'');
+    return out;
+  }
+
+  /* ---- saudação por horário (#12) ---- */
+  function saudacao(){ const h=new Date().getHours(); return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'; }
+
+  const setProg = p => fill.style.width = p+'%';
+  const visibleFields = step => step.fields.filter(f => !(f.onlyIfEmail && !CONFIG.pedirEmail));
+  const supportsContacts = ('contacts' in navigator) && ('ContactsManager' in window);
+
+  // Contact Picker API (Android Chrome) — botão "preencher com meus contatos"
+  async function pickContacts(){
+    try{
+      const sel = await navigator.contacts.select(['name','tel','email'], {multiple:false});
+      if(!sel || !sel.length) return;
+      const c = sel[0];
+      if(c.name  && c.name[0])  lead.nome     = c.name[0];
+      if(c.tel   && c.tel[0])   lead.telefone = maskBRPhone(c.tel[0]);
+      if(c.email && c.email[0]) lead.email    = c.email[0];
+      host.querySelectorAll('.input').forEach(el=>{ const k=el.dataset.key; if(lead[k]) el.value=lead[k]; });
+    }catch(e){ /* cancelado ou sem suporte */ }
+  }
+
+  // máscara BR: (11) 99999-9999 — corta em 11 dígitos (DDD + 9 dígitos)
+  function maskBRPhone(v){
+    let raw=v.replace(/\D/g,'');
+    if(raw.length>11 && raw.slice(0,2)==='55') raw=raw.slice(2);  // autofill às vezes traz o +55 → remove
+    const d=raw.slice(0,11);
+    if(d.length<=2) return d;
+    if(d.length<=6) return '('+d.slice(0,2)+') '+d.slice(2);
+    if(d.length<=10) return '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);
+    return '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7);
+  }
+  const phoneDigits = v => (v||'').replace(/\D/g,'');
+  function validPhone(v){ const d=phoneDigits(v); return d.length===10 || (d.length===11 && d[2]==='9'); }
+  function normalizePhone(v){ let d=phoneDigits(v); if(d.length>=10&&d.length<=11) d='55'+d; return d; }
+  function validEmail(v){ return /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(v); }
+  function validCity(v){ return v.replace(/[^a-zà-ú]/gi,'').length>=2; }
+
+  function enhance(action){
+    const first=host.querySelector('.input'); if(first){ try{first.focus({preventScroll:true});}catch(e){} }
+    host.querySelectorAll('input[type=tel]').forEach(el=>{
+      el.setAttribute('maxlength','15');
+      el.addEventListener('input',()=>{ el.value=maskBRPhone(el.value); });
+    });
+    host.querySelectorAll('.input').forEach(el=>{ el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); action(); } }); });
+  }
+
+  function renderWelcome(){
+    currentId=null; const w=CONFIG.welcome;
+    host.innerHTML = `<div class="screen active">
+      ${w.image?`<picture>${w.imageWebp?`<source srcset="${w.imageWebp}" type="image/webp">`:''}<img class="w-hero" src="${w.image}" alt="Heleva Moveleiros" width="700" height="466" loading="eager" decoding="async" fetchpriority="high"></picture>`:''}
+      <div class="greet">${saudacao()}, lojista.</div>
+      <h1 class="w-title">${w.title}</h1>
+      <p class="w-sub">${w.sub}</p>${w.note?`<p class="w-note">${w.note}</p>`:''}
+      <button class="btn" id="startBtn">${w.cta}</button>
+      ${w.proof?`<div class="proof"><span class="stars">★★★★★</span><span>${w.proof}</span></div>`:''}</div>`;
+    setProg(0);
+    document.getElementById('startBtn').onclick = ()=>{ stepHistory.length=0; armRetention(); render(CONFIG.steps[0].id); };
+  }
+
+  function render(id){
+    const step = stepById[id]; currentId=id;
+    if(step.type==='contact'){
+      host.innerHTML = `<div class="screen active">
+        <div class="q-step">Etapa ${stepHistory.length+1}</div>
+        <div class="q-title">${px(step.title)}</div>${step.sub?`<div class="q-sub">${px(step.sub)}</div>`:''}
+        ${(step.contactPicker && supportsContacts)?`<button type="button" class="contacts-btn" id="contactsBtn">📇 Preencher com meus contatos</button>`:''}
+        <form autocomplete="on" onsubmit="return false">${visibleFields(step).map((f,i)=>{
+          const inp = `<input class="input${f.prefix?' has-prefix':''}" data-key="${f.key}" name="${f.autocomplete}" id="f_${f.key}" type="${f.type}" inputmode="${f.type==='tel'?'tel':f.type==='email'?'email':'text'}" placeholder="${f.placeholder}" autocomplete="${f.autocomplete}" ${i===0?'autofocus':''}>`;
+          const campo = f.prefix ? `<div class="input-wrap"><span class="prefix">${f.prefix}</span>${inp}</div>` : inp;
+          return `<div class="field"><label class="label" for="f_${f.key}">${f.label}</label>${campo}<div class="err-msg"></div></div>`;
+        }).join('')}</form>
+        ${step.trust?`<div class="trust"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v5c0 5-3.5 9-8 11-4.5-2-8-6-8-11V6l8-4z" stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-linejoin="round"/></svg> Seus dados estão seguros · sem spam</div>`:''}
+        <button class="btn" id="okBtn">Continuar →</button>
+        <button class="back" id="backBtn">← Voltar</button></div>`;
+      updateProgress();
+      host.querySelectorAll('.input').forEach(el=>{ const k=el.dataset.key; if(lead[k]) el.value=lead[k]; }); // pré-preenche (volta/contatos)
+      const submit = ()=>onContact(step);
+      document.getElementById('okBtn').onclick = submit;
+      document.getElementById('backBtn').onclick = goBack;
+      const cb=document.getElementById('contactsBtn'); if(cb) cb.onclick=pickContacts;
+      enhance(submit);
+    }
+    else if(step.type==='single'){
+      host.innerHTML = `<div class="screen active">
+        ${step.image?`<img class="q-hero" src="${step.image}" alt="" loading="lazy" decoding="async">`:''}
+        <div class="q-step">Etapa ${stepHistory.length+1}</div>
+        <div class="q-title">${px(step.title)}</div>${step.sub?`<div class="q-sub">${px(step.sub)}</div>`:''}
+        <div class="opts">${step.options.map((o,i)=>`<button class="opt" data-i="${i}">${o.ic?`<span class="opt-ic">${o.ic}</span>`:''}<span>${o.t}</span><span class="opt-dot"></span></button>`).join('')}</div>
+        ${stepHistory.length?'<button class="back" id="backBtn">← Voltar</button>':''}</div>`;
+      updateProgress();
+      host.querySelectorAll('.opt').forEach(btn=>{
+        btn.onclick = ()=>{
+          host.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel');
+          const opt=step.options[+btn.dataset.i];
+          lead.respostas[step.id]=opt.t;
+          lead.pts[step.id]=opt.s||0;
+          lead.kills[step.id]=opt.kill===true;   // corte (nenhum vendedor / faturamento < R$ 30 mil)
+          setTimeout(()=>{
+            if(step.submit){ maybeShowSocialProof(); }                  // passo final → prova social (qualificado) ou finish
+            else { stepHistory.push(currentId); render(opt.next); }
+          },240);
+        };
+      });
+      const b=document.getElementById('backBtn'); if(b) b.onclick=goBack;
+    }
+    else if(step.type==='text'){
+      computeScore();   // avalia qualificação (score + kill) antes de decidir o botão de WhatsApp
+      const showWpp = step.submit && lead.qualified===true && !!buildWhatsappLink();
+      host.innerHTML = `<div class="screen active">
+        <div class="q-step">Quase lá</div>
+        <div class="q-title">${px(step.title)}</div>
+        <div class="field"><input class="input" id="f_text" type="text" placeholder="${step.field.placeholder}" autocomplete="off" autofocus></div>
+        <button class="btn" id="okBtn">${step.submit?'Quero meu diagnóstico →':'Continuar →'}</button>
+        ${showWpp?`<button class="wpp-alt" id="wppDirect">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.973-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Prefiro falar agora no WhatsApp</button>`:''}
+        <button class="back" id="backBtn">← Voltar</button></div>`;
+      updateProgress();
+      const submit = ()=>{
+        const v=document.getElementById('f_text');
+        if(!v.value.trim()){ v.classList.add('err'); v.focus(); return; }
+        lead.respostas[step.id]=v.value.trim();
+        if(step.submit) finish(); else { stepHistory.push(currentId); render(step.next); }
+      };
+      document.getElementById('okBtn').onclick = submit;
+      const wd=document.getElementById('wppDirect');
+      if(wd) wd.onclick = ()=>{ lead.respostas[step.id]=lead.respostas[step.id]||'(foi direto pro WhatsApp)'; finish(true); };
+      document.getElementById('backBtn').onclick = goBack;
+      enhance(submit);
+    }
+  }
+
+  function onContact(step){
+    const inputs=[...host.querySelectorAll('.input')]; let ok=true;
+    inputs.forEach(f=>{
+      const field=f.closest('.field'), msgEl=field.querySelector('.err-msg');
+      f.classList.remove('err'); field.classList.remove('show-err');
+      const val=f.value.trim(), key=f.dataset.key; let msg='';
+      if(!val) msg='Campo obrigatório.';
+      else if(key==='nome' && (val.indexOf('@')>-1 || val.replace(/[^a-zà-ú]/gi,'').length<2)) msg='Digite seu nome (sem e-mail).';
+      else if(key==='telefone' && !validPhone(val)) msg='Digite um WhatsApp válido com DDD (ex: (11) 99999-9999).';
+      else if((key==='email'||f.type==='email') && !validEmail(val)) msg='Digite um e-mail válido.';
+      else if(key==='cidade' && !validCity(val)) msg='Informe sua cidade.';
+      if(msg){ f.classList.add('err'); field.classList.add('show-err'); if(msgEl) msgEl.textContent=msg; if(ok){f.focus();ok=false;} }
+    });
+    if(!ok) return;
+    inputs.forEach(f=>{ lead[f.dataset.key]=f.value.trim(); });
+    setAdvancedMatching();
+    if(step.fireContato) fireEvent(CONFIG.eventoContato);
+    if(step.savePartial) sendWebhook(true);   // #3 — salva nome+telefone na hora
+    stepHistory.push(currentId); render(step.next);
+  }
+
+  function goBack(){ const prev=stepHistory.pop(); if(prev) render(prev); else renderWelcome(); }
+
+  function updateProgress(){
+    const total = CONFIG.steps.length;   // quiz linear (sem ramificação)
+    setProg(Math.min(96, Math.round((stepHistory.length+1)/total*100)));
+  }
+
+  /* ---- SCORE + qualificação (ICP Moveleiro): score do caminho + kill switch ---- */
+  function computeScore(){
+    const path = stepHistory.concat(currentId);
+    let s=0, killed=false;
+    path.forEach(id=>{ s += (lead.pts[id]||0); if(lead.kills[id]) killed=true; });
+    lead.score    = s;
+    lead.killed   = killed;
+    lead.qualified= !killed && s >= CONFIG.qualifyThreshold;   // kill switch derruba mesmo com score alto
+    lead.top      = lead.qualified && s >= CONFIG.topThreshold;
+    return s;
+  }
+
+  function setAdvancedMatching(){
+    if(!window.fbq || CONFIG.pixelId.indexOf("COLOQUE")>=0) return;
+    const p=(lead.nome||'').toLowerCase().split(' ').filter(Boolean);
+    const am={ ph:normalizePhone(lead.telefone), fn:p[0]||'', ln:p.slice(1).join(' ')||'' };
+    if(lead.email)  am.em=lead.email.toLowerCase();
+    if(lead.cidade) am.ct=lead.cidade.toLowerCase().replace(/[^a-zà-ú]/g,'');
+    fbq('init', CONFIG.pixelId, am);
+  }
+  function fireEvent(name, custom){
+    // mesmo event_id (base) pro navegador e pra CAPI → Meta deduplica por (event_name + event_id)
+    lead.firedEvents.push({ event_name:name, event_id:eventId, custom_data:custom||{} });
+    if(!window.fbq || CONFIG.pixelId.indexOf("COLOQUE")>=0){ console.log('[pixel mock]',name,custom||{},'| qualified:',lead.qualified,'| score:',lead.score,'| top:',lead.top); return; }
+    fbq('track', name, custom||{}, { eventID:eventId });
+  }
+  // Envio que SOBREVIVE ao redirect (sendBeacon é entregue mesmo com a página saindo).
+  // Corrige o bug de lead perdido no Sheets quando redireciona pro WhatsApp (mobile/iOS).
+  function postBeacon(url, data){
+    var body = JSON.stringify(data);
+    try{
+      if(navigator.sendBeacon){
+        var blob = new Blob([body], {type:'text/plain;charset=UTF-8'});
+        if(navigator.sendBeacon(url, blob)) return;   // sucesso garantido pelo browser
+      }
+    }catch(e){}
+    try{ fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:body,keepalive:true}); }catch(e){}
+  }
+  function sendWebhook(parcial){
+    const payload = Object.assign({
+      pagina:CONFIG.pagina, origem_label:CONFIG.origemLabel||'', event_id:eventId, ref:refCode,
+      nome:lead.nome||'', telefone:lead.telefone||'', email:lead.email||'', cidade:lead.cidade||'',
+      papel:lead.papel, qualificado:lead.qualified===true,
+      score:lead.score, top_tier:lead.top===true,
+      tier: parcial ? 'parcial' : (lead.qualified===true ? (lead.top?'top':'qualificado') : 'desqualificado'),
+      parcial: parcial===true,
+      // --- campos pra CAPI (server-side via n8n) ---
+      fbc:fbc||'', fbp:fbp||'',
+      user_agent:navigator.userAgent, event_source_url:location.href,
+      event_time:Math.floor(Date.now()/1000),
+      eventos:lead.firedEvents,   // [{event_name, event_id, custom_data}] → replicar na CAPI com MESMO event_id
+      respostas:lead.respostas, origem:location.href
+    }, utms);
+
+    // 1) Google Sheets (Apps Script Web App) — via sendBeacon, sobrevive ao redirect pro WhatsApp
+    if(CONFIG.sheetsUrl && CONFIG.sheetsUrl.indexOf("COLOQUE")<0){
+      postBeacon(CONFIG.sheetsUrl, payload);
+    } else { console.log('[sheets mock'+(parcial?' · PARCIAL':'')+']',payload); }
+
+    // 2) Webhook padrão (n8n / endpoint do Matheus)
+    if(CONFIG.webhookUrl.indexOf("COLOQUE")>=0){ console.log('[webhook mock'+(parcial?' · PARCIAL':'')+']',payload); return Promise.resolve(); }
+    return fetch(CONFIG.webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(e=>console.warn('webhook',e));
+  }
+
+  /* ---- tela "analisando seu perfil" (#5) ---- */
+  function showAnalyzing(done){
+    disarmRetention();
+    host.innerHTML = `<div class="screen active" style="text-align:center">
+      <div class="spinner"></div>
+      <div class="analy-t">Analisando seu perfil${firstName()?', '+firstName():''}…</div>
+      <div class="analy-s" id="analyMsg">${CONFIG.analisando.msgs[0]}</div></div>`;
+    const el=document.getElementById('analyMsg'); let i=0;
+    const each=Math.max(500, Math.floor(CONFIG.analisando.ms/CONFIG.analisando.msgs.length));
+    const t=setInterval(()=>{ i++; if(i>=CONFIG.analisando.msgs.length){clearInterval(t);return;}
+      el.style.opacity=0; setTimeout(()=>{ el.textContent=CONFIG.analisando.msgs[i]; el.style.opacity=1; },200);
+    }, each);
+    setTimeout(()=>{ clearInterval(t); done(); }, CONFIG.analisando.ms);
+  }
+
+  function buildWhatsappLink(){
+    const num=(CONFIG.whatsapp&&CONFIG.whatsapp.number||'').replace(/\D/g,'');
+    if(!num) return '';
+    const r = lead.respostas || {};
+    const linhas = [ px(CONFIG.whatsapp.msg||'') ];
+    const diag = [];
+    if(r.desafio)      diag.push('• Maior desafio: '     + r.desafio);
+    if(r.faturamento)  diag.push('• Faturamento mensal: ' + r.faturamento);
+    if(diag.length){
+      linhas.push('');
+      linhas.push('📋 Meu diagnóstico:');
+      linhas.push(diag.join('\n'));
+    }
+    // origem sempre visível no WhatsApp — é como o comercial identifica que veio da bio
+    if(CONFIG.origemLabel){
+      linhas.push('');
+      linhas.push('🔗 Origem: ' + CONFIG.origemLabel);
+    }
+    linhas.push('');
+    linhas.push('🚀');
+    // código de rastreio no FIM da mensagem — é por ele que o n8n casa a conversa com a linha da planilha
+    try{ if(refCode) linhas.push('['+refCode+']'); }catch(e){}
+    return 'https://wa.me/'+num+'?text='+encodeURIComponent(linhas.join('\n'));
+  }
+
+  function showSuccess(){
+    disarmRetention();
+    setProg(100);
+    const qualified = lead.qualified===true;
+    const wpp = qualified ? buildWhatsappLink() : '';   // #2 — só pro qualificado
+    const auto = !!(qualified && wpp && CONFIG.whatsapp.autoRedirect);
+
+    const wppBtn = wpp ? `<a class="wpp-btn" href="${wpp}" target="_self" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#072b14"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.973-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Falar agora no WhatsApp</a>` : '';
+
+    if(auto){
+      host.innerHTML = `<div class="screen active">
+        <div class="success-ic">✓</div>
+        <div class="success-t">Tudo certo${firstName()?', '+firstName():''}! 🎉</div>
+        <p class="success-s">Estamos te levando pro <b style="color:#fff">WhatsApp</b> pra liberar sua análise gratuita agora mesmo…</p>
+        ${wppBtn}
+        <p class="success-s" style="font-size:13px;margin-top:14px">Não abriu? Toque no botão acima.</p>
+      </div>`;
+      setTimeout(()=>{ location.href = wpp; }, CONFIG.whatsapp.redirectDelayMs||1800);
+    } else {
+      host.innerHTML = `<div class="screen active">
+        <div class="success-ic">✓</div>
+        <div class="success-t">Recebemos seu cadastro${firstName()?', '+firstName():''}!</div>
+        <p class="success-s">Nossa equipe vai analisar seu perfil e entrar em contato pelo WhatsApp que você informou. 🚀</p>
+        ${wppBtn}
+      </div>`;
+    }
+  }
+
+  /* ---- prova social antes do submit (todos os leads) ---- */
+  function maybeShowSocialProof(){
+    computeScore();
+    const sp = CONFIG.socialProof;
+    if(sp && sp.enabled && Array.isArray(sp.items) && sp.items.length){
+      showSocialProof();
+    } else {
+      finish();
+    }
+  }
+
+  function showSocialProof(){
+    const sp = CONFIG.socialProof;
+    setProg(98);
+    host.innerHTML = `<div class="screen active sp-screen">
+      <div class="q-step">${sp.eyebrow||'Antes de enviar seu diagnóstico'}</div>
+      <div class="q-title">${px(sp.title||'')}</div>
+      ${sp.sub?`<div class="q-sub">${px(sp.sub)}</div>`:''}
+      <div class="sp-items">${sp.items.map(spItemHtml).join('')}</div>
+      <button class="btn" id="okBtn">${sp.cta||'Enviar diagnóstico →'}</button>
+    </div>`;
+    bindSpVideos();
+    document.getElementById('okBtn').onclick = ()=>finish();
+  }
+
+  function spItemHtml(it, i){
+    const reverse = i%2===1 ? ' sp-item--reverse' : '';
+    const imgStyle = it.imagePosition ? ` style="object-position:${it.imagePosition}"` : '';
+    const media = it.video
+      ? `<div class="sp-media"><video class="sp-video" src="${it.video}" muted loop autoplay playsinline preload="metadata"></video><button class="sp-play" type="button" aria-label="Reproduzir com som">▶</button></div>`
+      : `<div class="sp-media"><img class="sp-img" src="${it.image}" alt="${(it.title||'').replace(/"/g,'&quot;')}"${imgStyle} loading="lazy"></div>`;
+    const text = `<div class="sp-text"><div class="sp-item-title">${it.title}</div><div class="sp-item-desc">${it.desc}</div></div>`;
+    return `<article class="sp-item${reverse}">${media}${text}</article>`;
+  }
+
+  function bindSpVideos(){
+    host.querySelectorAll('.sp-media').forEach(m=>{
+      const v = m.querySelector('video');
+      const btn = m.querySelector('.sp-play');
+      if(!v || !btn) return;
+      const toggle = ()=>{
+        host.querySelectorAll('.sp-video').forEach(ov=>{ if(ov!==v){ ov.muted=true; ov.pause(); }});
+        host.querySelectorAll('.sp-play').forEach(b=>{ if(b!==btn) b.classList.remove('hidden'); });
+        if(v.muted){ v.muted=false; v.currentTime=0; v.play(); btn.classList.add('hidden'); }
+        else { v.muted=true; v.pause(); btn.classList.remove('hidden'); }
+      };
+      btn.addEventListener('click', toggle);
+      v.addEventListener('click', toggle);
+    });
+  }
+
+  function finish(quick){
+    computeScore();
+    // dispara pixel ANTES do delay, pra não perder se a pessoa fechar (#7/#8 condicional)
+    if(lead.qualified===true){
+      const val = lead.top ? CONFIG.valorTop : CONFIG.valorBom;
+      fireEvent(CONFIG.eventoConversao, {value:val, currency:CONFIG.currency});
+    }
+    sendWebhook(false);
+    if(!quick && CONFIG.analisando && CONFIG.analisando.enabled) showAnalyzing(showSuccess);
+    else showSuccess();
+  }
+
+  /* ---- modal de retenção no back (#4) ---- */
+  function onPopState(){
+    window.history.pushState(null,'',location.href); // re-prende
+    if(!CONFIG.retencao || !CONFIG.retencao.enabled){ doLeave(); return; }
+    document.getElementById('retModal').classList.add('show');
+  }
+  function armRetention(){
+    if(retentionArmed) return; retentionArmed=true;
+    window.history.pushState(null,'',location.href);
+    window.addEventListener('popstate', onPopState);
+  }
+  function disarmRetention(){
+    if(!retentionArmed) return; retentionArmed=false;
+    window.removeEventListener('popstate', onPopState);
+  }
+  function doLeave(){
+    disarmRetention();
+    if(CONFIG.backRedirect && CONFIG.backRedirect.url){ location.href=CONFIG.backRedirect.url; }
+    else { window.history.back(); }
+  }
+  (function wireModal(){
+    const m=document.getElementById('retModal');
+    document.getElementById('retTitle').textContent=CONFIG.retencao.title;
+    document.getElementById('retText').textContent=CONFIG.retencao.text;
+    const stay=document.getElementById('retStay'), leave=document.getElementById('retLeave');
+    stay.textContent=CONFIG.retencao.stay; leave.textContent=CONFIG.retencao.leave;
+    stay.onclick=()=>{ m.classList.remove('show'); };
+    leave.onclick=()=>{ m.classList.remove('show'); doLeave(); };
+  })();
+
+  renderWelcome();
+})();
+</script>
+</body>
+</html>
